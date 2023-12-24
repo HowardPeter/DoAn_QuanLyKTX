@@ -16,7 +16,7 @@ namespace DoAn_QuanLyKTX
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FrmDashboard());
+            Application.Run(new FrmNguoiThan());
         }
     }
 }

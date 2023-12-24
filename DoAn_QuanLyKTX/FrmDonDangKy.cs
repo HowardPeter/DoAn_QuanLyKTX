@@ -78,9 +78,9 @@ namespace DoAn_QuanLyKTX
 
         private int maDonValue()
         {
-            DataGridViewRow row = dgvThongTin.CurrentRow;
             if (dgvThongTin.RowCount != 0)
             {
+                DataGridViewRow row = dgvThongTin.CurrentRow;
                 object n = row.Cells["MaDon"].Value;
                 int maDonValue = Convert.ToInt32(n);
                 return maDonValue;

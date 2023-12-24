@@ -34,14 +34,22 @@ namespace DoAn_QuanLyKTX
 
             firstLoadData();
         }
+        private string maNTValue()
+        {
+            if (dgvThongTin.RowCount != 0)
+            {
+                DataGridViewRow row = dgvThongTin.CurrentRow;
+                object ma = row.Cells["MaNT"].Value;
+                string maNT = ma.ToString();
+                return maNT;
+            }
+            return null;
+        }
         void firstLoadData()
         {
             if (dgvThongTin.DataSource == null || dsNgThan.Count == 0) return;
 
-            DataGridViewRow row = dgvThongTin.CurrentRow;
-            int id = row.Index;
-            if (id > dsNgThan.Count - 1) return;
-            NgThan = dsNgThan[id];
+            NgThan = dsNgThan.SingleOrDefault(n => n.MaNT == maNTValue());
 
             txtTenNT.Text = NgThan.TenNT.ToString();
             txtQuanHe.Text = NgThan.QuanHe.ToString();
@@ -59,43 +67,37 @@ namespace DoAn_QuanLyKTX
                 rBGTNu.Checked = true;
             }
         }
+        void hideColumn(int c)
+        {
+            dgvThongTin.Columns[c].Width = 0;
+            dgvThongTin.Columns[c].Visible = false;
+        }
         void LoadData(List<NGUOITHAN> nt)
         {
-            if(nt.Count == 0) return;
+            if (nt.Count == 0) return;
 
             dgvThongTin.DataSource = null;
             dgvThongTin.DataSource = nt;
 
-            dgvThongTin.Columns[4].Width = 0;
-            dgvThongTin.Columns[4].Visible = false;
+            hideColumn(6);
+            hideColumn(7);
 
-            dgvThongTin.Columns[3].Width -= 30;
+            dgvThongTin.Columns[2].Width -= 50;
+            dgvThongTin.Columns[3].Width -= 50;
+            dgvThongTin.Columns[4].Width -= 20;
         }
         private void btnClose_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
-        private int maNTSVValue()
-        {
-            DataGridViewRow row = dgvThongTin.CurrentRow;
-            object n = row.Cells["MaSV"].Value;
-            int maNTSVValue = Convert.ToInt32(n);
-            return maNTSVValue;
-        }
-        private string tenNTValue()
-        {
-            DataGridViewRow row = dgvThongTin.CurrentRow;
-            object n = row.Cells["TenNT"].Value;
-            string tenNTValue = Convert.ToString(n);
-            return tenNTValue;
-        }
         private void displayCell()
         {
-            NgThan = dsNgThan.Where(p => p.MaSV == maNTSVValue() && p.TenNT == tenNTValue()).SingleOrDefault();
+            NgThan = dsNgThan.SingleOrDefault(p => p.MaNT == maNTValue());
 
             txtTenNT.Text = NgThan.TenNT.ToString();
             txtQuanHe.Text = NgThan.QuanHe.ToString();
+            txtSDT.Text = NgThan.SoDT;
             cBMaSV.Text = NgThan.MaSV.ToString();
             if (NgThan.GioiTinh == "Nam")
             {
@@ -145,8 +147,8 @@ namespace DoAn_QuanLyKTX
             NgThan.TenNT = txtTenNT.Text;
             NgThan.QuanHe = txtQuanHe.Text;
             NgThan.SoDT = txtSDT.Text;
-            
-            if(cBMaSV.SelectedItem != null)
+
+            if (cBMaSV.SelectedItem != null)
             {
                 string maSV = cBMaSV.SelectedItem.ToString();
                 NgThan.MaSV = int.Parse(maSV);
@@ -208,7 +210,7 @@ namespace DoAn_QuanLyKTX
         {
             if (dsNgThan.Count == 0 || NgThan == null) return;
 
-            NgThan = dsNgThan.Where(p => p.MaSV == maNTSVValue() && p.TenNT == tenNTValue()).SingleOrDefault();
+            NgThan = dsNgThan.SingleOrDefault(p => p.MaNT == maNTValue());
             dsNgThan.Remove(NgThan);
             db.NGUOITHANs.Remove(NgThan);
             db.SaveChanges();
