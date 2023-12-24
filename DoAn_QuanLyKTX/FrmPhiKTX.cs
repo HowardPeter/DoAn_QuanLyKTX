@@ -105,7 +105,16 @@ namespace DoAn_QuanLyKTX
                 txtTongTien.Text = tongTien.ToString("{0:N0}");
             }
         }
-
+        private bool SinhVienDaNopTrongThang()
+        {
+            DateTime ngaydong = dtPNgayDong.Value;
+            // Lấy danh sách biên lai của sinh viên trong tháng và năm hiện tại
+            List<PHIKTX> bienLaiTrongThang = dsPhiKTX
+                .Where(p => p.MaSV == int.Parse(cBMaSV.Text) && p.NgayDong.Month == ngaydong.Month && p.NgayDong.Year == ngaydong.Year).ToList();
+            
+            // Nếu có biên lai trong tháng thì sinh viên đã nộp
+            return bienLaiTrongThang.Any();
+        }
         private void ResetForm()
         {
             cBMaSV.Text = "";
@@ -137,6 +146,7 @@ namespace DoAn_QuanLyKTX
                 MessageBox.Show("Ngày đóng không thể lớn hơn ngày hiện tại!");
                 return;
             }
+
             // Lấy mã biên lai lớn nhất
             string maxMaBienLai = dsPhiKTX.Max(a => a.MaBienLai);
 
@@ -182,6 +192,11 @@ namespace DoAn_QuanLyKTX
                 {
                     p.TienGuiXe = decimal.Parse(txtTienGuixe.Text);
                 }
+            }
+            if (SinhVienDaNopTrongThang())
+            {
+                MessageBox.Show("Sinh viên đã nộp biên lai trong tháng. Không thể thêm mới.");
+                return;
             }
             TinhTongTienChoPhiKTX(p);
             dsPhiKTX.Add(p);
@@ -278,7 +293,7 @@ namespace DoAn_QuanLyKTX
                 dtPSearch.Visible = false;
                 cBSearch.Visible = true;
             }
-            else if(cBMenuSearch.SelectedIndex == 2)
+            else if (cBMenuSearch.SelectedIndex == 2)
             {
                 txtSearch.Visible = false;
                 dtPSearch.Visible = true;

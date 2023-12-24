@@ -19,9 +19,5 @@ namespace DoAn_QuanLyKTX
         public string MaPhong { get; set; }
     
         public virtual PHONGKYTUC PHONGKYTUC { get; set; }
-        public override string ToString()
-        {
-            return MaTB.ToString();
-        }
     }
 }
