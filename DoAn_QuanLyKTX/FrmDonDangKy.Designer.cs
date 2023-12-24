@@ -59,6 +59,7 @@
             this.label7 = new System.Windows.Forms.Label();
             this.dgvThongTin = new System.Windows.Forms.DataGridView();
             this.btnClose = new System.Windows.Forms.Button();
+            this.lblNull = new System.Windows.Forms.Label();
             this.panel3.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.panel4.SuspendLayout();
@@ -384,6 +385,7 @@
             // 
             this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(136)))), ((int)(((byte)(209)))));
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel2.Controls.Add(this.lblNull);
             this.panel2.Controls.Add(this.label8);
             this.panel2.Controls.Add(this.dgvSinhVien);
             this.panel2.Controls.Add(this.label7);
@@ -451,6 +453,19 @@
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
+            // lblNull
+            // 
+            this.lblNull.AutoSize = true;
+            this.lblNull.BackColor = System.Drawing.SystemColors.AppWorkspace;
+            this.lblNull.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblNull.ForeColor = System.Drawing.Color.White;
+            this.lblNull.Location = new System.Drawing.Point(16, 64);
+            this.lblNull.Name = "lblNull";
+            this.lblNull.Size = new System.Drawing.Size(327, 37);
+            this.lblNull.TabIndex = 7;
+            this.lblNull.Text = "Hiện chưa có dữ liệu";
+            this.lblNull.Visible = false;
+            // 
             // FrmDonDangKy
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -516,5 +531,6 @@
         private System.Windows.Forms.TextBox txtSearch;
         private System.Windows.Forms.ComboBox cBTinhTrang;
         private System.Windows.Forms.Button btnRefresh;
+        private System.Windows.Forms.Label lblNull;
     }
 }
