@@ -322,18 +322,21 @@ namespace DoAn_QuanLyKTX
         }
         void LoadDataTgTham(List<THOIGIANTHAM> tgt)
         {
+            tgt = dsTG.Where(t => t.MaNT == maNTValue()).ToList();
+            if(tgt.Count == 0) return;
+
             dgvTGTham.DataSource = null;
             dgvTGTham.DataSource = tgt;
 
             hideColumn(3, dgvTGTham);
-            hideColumn(3, dgvTGTham);
+            hideColumn(4, dgvTGTham);
             hideColumn(0, dgvTGTham);
         }
         public bool CheckDieuKienSQL()
         {
             DateTime dtV = dtPThoiGianVao.Value;
             DateTime dtR = dtPThoiGianRa.Value;
-            return (dtV <= DateTime.Now && dtR <= DateTime.Now) && (dtR.Day >= dtV.Day && dtR.Day <= dtV.Day + 1 && dtR.Month == dtV.Month && dtR.Year == dtV.Year);
+            return dtV <= DateTime.Now && dtR.Day >= dtV.Day && dtR.Day <= dtV.Day + 1 && dtR.Month == dtV.Month && dtR.Year == dtV.Year;
         }
         private string getMaTG()
         {
