@@ -59,20 +59,31 @@ namespace DoAn_QuanLyKTX
         void LoadData(List<DONDANGKY> ddk)
         {
             ddk = dsDonDK.Where(d => d.TinhTrang == "Chờ phê duyệt").ToList();
-            if (dsDonDK.Count == 0 || ddk.Count == 0) return;
-            dgvThongTin.DataSource = null;
-            dgvThongTin.DataSource = ddk;
+            if (dsDonDK.Count == 0) return;
+            if (ddk.Count == 0)
+            {
+                dgvThongTin.DataSource = null;
+            }
+            else
+            {
+                dgvThongTin.DataSource = null;
+                dgvThongTin.DataSource = ddk;
 
-            dgvThongTin.Columns[4].Width = 0;
-            dgvThongTin.Columns[4].Visible = false;
+                dgvThongTin.Columns[4].Width = 0;
+                dgvThongTin.Columns[4].Visible = false;
+            }
         }
 
         private int maDonValue()
         {
             DataGridViewRow row = dgvThongTin.CurrentRow;
-            object n = row.Cells["MaDon"].Value;
-            int maDonValue = Convert.ToInt32(n);
-            return maDonValue;
+            if (dgvThongTin.RowCount != 0)
+            {
+                object n = row.Cells["MaDon"].Value;
+                int maDonValue = Convert.ToInt32(n);
+                return maDonValue;
+            }
+            return 0;
         }
 
         private void displayCell()
