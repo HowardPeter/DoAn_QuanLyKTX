@@ -12,7 +12,7 @@ namespace DoAn_QuanLyKTX
 {
     public partial class FrmNguoiThan : Form
     {
-        QuanLyKyTucXaEntities3 db = new QuanLyKyTucXaEntities3();
+        QuanLyKyTucXaEntities4 db = new QuanLyKyTucXaEntities4();
         List<NGUOITHAN> dsNgThan = new List<NGUOITHAN>();
         List<SINHVIEN> dsSinhVien = new List<SINHVIEN>();
         NGUOITHAN NgThan = null;
@@ -144,9 +144,17 @@ namespace DoAn_QuanLyKTX
 
             NgThan.TenNT = txtTenNT.Text;
             NgThan.QuanHe = txtQuanHe.Text;
-
-            string maSV = cBMaSV.SelectedItem.ToString();
-            NgThan.MaSV = int.Parse(maSV);
+            NgThan.SoDT = txtSDT.Text;
+            
+            if(cBMaSV.SelectedItem != null)
+            {
+                string maSV = cBMaSV.SelectedItem.ToString();
+                NgThan.MaSV = int.Parse(maSV);
+            }
+            else
+            {
+                NgThan.MaSV = int.Parse(cBMaSV.Text);
+            }
             if (rBGTNam.Checked == true)
             {
                 NgThan.GioiTinh = "Nam";

@@ -12,7 +12,7 @@ namespace DoAn_QuanLyKTX
 {
     public partial class FrmLogin : Form
     {
-        QuanLyKyTucXaEntities3 db = new QuanLyKyTucXaEntities3();
+        QuanLyKyTucXaEntities4 db = new QuanLyKyTucXaEntities4();
         List<TAIKHOANQL> dsTK = new List<TAIKHOANQL>();
         public static int maQL;
         public FrmLogin()

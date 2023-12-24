@@ -14,10 +14,10 @@ namespace DoAn_QuanLyKTX
     
     public partial class THOIGIANTHAM
     {
-        public string TenNT { get; set; }
-        public int MaSV { get; set; }
+        public string MaTG { get; set; }
         public System.DateTime ThoiGianVao { get; set; }
         public System.DateTime ThoiGianRa { get; set; }
+        public string MaNT { get; set; }
     
         public virtual NGUOITHAN NGUOITHAN { get; set; }
     }

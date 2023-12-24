@@ -69,6 +69,8 @@
             this.dgvSinhVien = new System.Windows.Forms.DataGridView();
             this.dgvThongTin = new System.Windows.Forms.DataGridView();
             this.btnClose = new System.Windows.Forms.Button();
+            this.txtSDT = new System.Windows.Forms.TextBox();
+            this.label11 = new System.Windows.Forms.Label();
             this.groupBox2.SuspendLayout();
             this.panel5.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -106,7 +108,7 @@
             // 
             this.rBGTNu.AutoSize = true;
             this.rBGTNu.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rBGTNu.Location = new System.Drawing.Point(384, 257);
+            this.rBGTNu.Location = new System.Drawing.Point(384, 209);
             this.rBGTNu.Name = "rBGTNu";
             this.rBGTNu.Size = new System.Drawing.Size(71, 33);
             this.rBGTNu.TabIndex = 25;
@@ -118,7 +120,7 @@
             // 
             this.rBGTNam.AutoSize = true;
             this.rBGTNam.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rBGTNam.Location = new System.Drawing.Point(249, 255);
+            this.rBGTNam.Location = new System.Drawing.Point(249, 207);
             this.rBGTNam.Name = "rBGTNam";
             this.rBGTNam.Size = new System.Drawing.Size(92, 33);
             this.rBGTNam.TabIndex = 24;
@@ -130,7 +132,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(58, 254);
+            this.label5.Location = new System.Drawing.Point(58, 206);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(129, 32);
             this.label5.TabIndex = 23;
@@ -140,7 +142,7 @@
             // 
             this.cBMaSV.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cBMaSV.FormattingEnabled = true;
-            this.cBMaSV.Location = new System.Drawing.Point(249, 159);
+            this.cBMaSV.Location = new System.Drawing.Point(249, 140);
             this.cBMaSV.Name = "cBMaSV";
             this.cBMaSV.Size = new System.Drawing.Size(221, 37);
             this.cBMaSV.TabIndex = 22;
@@ -149,7 +151,7 @@
             // 
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.Location = new System.Drawing.Point(58, 164);
+            this.label10.Location = new System.Drawing.Point(58, 145);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(185, 32);
             this.label10.TabIndex = 21;
@@ -166,6 +168,8 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.txtSDT);
+            this.groupBox2.Controls.Add(this.label11);
             this.groupBox2.Controls.Add(this.panel5);
             this.groupBox2.Controls.Add(this.txtQuanHe);
             this.groupBox2.Controls.Add(this.label3);
@@ -587,6 +591,25 @@
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
+            // txtSDT
+            // 
+            this.txtSDT.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtSDT.Location = new System.Drawing.Point(249, 265);
+            this.txtSDT.Multiline = true;
+            this.txtSDT.Name = "txtSDT";
+            this.txtSDT.Size = new System.Drawing.Size(221, 39);
+            this.txtSDT.TabIndex = 30;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label11.Location = new System.Drawing.Point(59, 272);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(73, 32);
+            this.label11.TabIndex = 29;
+            this.label11.Text = "SĐT";
+            // 
             // FrmNguoiThan
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -667,5 +690,7 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.DateTimePicker dtPNgayVao;
         private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.TextBox txtSDT;
+        private System.Windows.Forms.Label label11;
     }
 }

@@ -13,10 +13,10 @@ namespace DoAn_QuanLyKTX
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class QuanLyKyTucXaEntities3 : DbContext
+    public partial class QuanLyKyTucXaEntities4 : DbContext
     {
-        public QuanLyKyTucXaEntities3()
-            : base("name=QuanLyKyTucXaEntities3")
+        public QuanLyKyTucXaEntities4()
+            : base("name=QuanLyKyTucXaEntities4")
         {
         }
     

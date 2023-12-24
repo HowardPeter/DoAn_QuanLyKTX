@@ -12,7 +12,7 @@ namespace DoAn_QuanLyKTX
 {
     public partial class FrmPhiKTX : Form, ICondition
     {
-        QuanLyKyTucXaEntities3 db = new QuanLyKyTucXaEntities3();
+        QuanLyKyTucXaEntities4 db = new QuanLyKyTucXaEntities4();
         List<PHIKTX> dsPhiKTX = new List<PHIKTX>();
         List<SINHVIEN> dsSV = new List<SINHVIEN>();
         PHIKTX phiKTX = null;
