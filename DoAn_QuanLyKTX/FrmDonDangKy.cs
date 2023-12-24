@@ -14,8 +14,10 @@ namespace DoAn_QuanLyKTX
     {
         QuanLyKyTucXaEntities3 db = new QuanLyKyTucXaEntities3();
         List<DONDANGKY> dsDonDK = new List<DONDANGKY>();
-
         DONDANGKY donDangKy = null;
+
+        bool iscBTinhTrangClicked = false;
+
         public FrmDonDangKy()
         {
             InitializeComponent();
@@ -35,10 +37,7 @@ namespace DoAn_QuanLyKTX
         {
             if (dgvThongTin.DataSource == null || dsDonDK.Count == 0) return;
 
-            DataGridViewRow row = dgvThongTin.CurrentRow;
-            int id = row.Index;
-            if (id > dsDonDK.Count - 1) return;
-            donDangKy = dsDonDK[id];
+            donDangKy = dsDonDK.SingleOrDefault(d => d.MaDon == maDonValue());
 
             txtMaDon.Text = donDangKy.MaDon.ToString();
             txtMaSV.Text = donDangKy.MaSV.ToString();
@@ -76,8 +75,6 @@ namespace DoAn_QuanLyKTX
             return maDonValue;
         }
 
-        //LỖI: sau khi thêm 1 hàng dữ liệu mới vào dữ liệu đang trống, khi click vào hàng dữ liệu mới sẽ gặp lỗi,
-        //bắt buộc phải restart chương trình
         private void displayCell()
         {
             donDangKy = dsDonDK.Where(p => p.MaDon == maDonValue()).SingleOrDefault();
@@ -143,13 +140,18 @@ namespace DoAn_QuanLyKTX
                 return;
             }
 
-            DONDANGKY don = dsDonDK.Where(p => p.MaSV == int.Parse(txtMaSV.Text) && p.TinhTrang == "Chấp nhận").FirstOrDefault();
-            if (don != null)
+            DONDANGKY doncn = dsDonDK.SingleOrDefault(p => p.MaSV == int.Parse(txtMaSV.Text) && p.TinhTrang == "Chấp nhận");
+            if (doncn != null)
             {
-                MessageBox.Show("Sinh viên này đã có đơn được chấp thuận!");
+                MessageBox.Show($"Sinh viên này đã có đơn được chấp thuận!\nMã đơn: {doncn.MaDon}.");
                 return;
             }
-
+            DONDANGKY doncpd = dsDonDK.SingleOrDefault(p => p.MaSV == int.Parse(txtMaSV.Text) && p.TinhTrang == "Chờ phê duyệt");
+            if (doncpd != null)
+            {
+                MessageBox.Show($"Sinh viên này đang có đơn chờ được phê duyệt!\nMã đơn: {doncpd.MaDon}.");
+                return;
+            }
             if (!CheckDieuKienSQL())
             {
                 MessageBox.Show("Ngày nộp không thể lớn hơn ngày hiện tại!");
@@ -178,7 +180,16 @@ namespace DoAn_QuanLyKTX
             LoadData(dsDonDK);
             MessageBox.Show("Thêm đơn thành công.");
         }
+        private void cBTinhTrang_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (dsDonDK.Count == 0 || !iscBTinhTrangClicked) return;
 
+            DataGridViewRow row = dgvThongTin.CurrentRow;
+            object n = row.Cells["MaSV"].Value;
+            int maSV = Convert.ToInt32(n);
+            if (txtMaSV.Text != maSV.ToString()) return;
+            row.Cells["TinhTrang"].Value = cBTinhTrang.SelectedItem.ToString();
+        }
         private void btnUpdate_Click(object sender, EventArgs e)
         {
             if (dsDonDK.Count == 0 || donDangKy == null) return;
@@ -278,6 +289,15 @@ namespace DoAn_QuanLyKTX
         private void btnClose_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+        private void cBTinhTrang_Enter(object sender, EventArgs e)
+        {
+            iscBTinhTrangClicked = true;
+        }
+
+        private void cBTinhTrang_Leave(object sender, EventArgs e)
+        {
+            iscBTinhTrangClicked = false;
         }
     }
 }

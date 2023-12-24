@@ -356,6 +356,9 @@
             this.cBTinhTrang.Name = "cBTinhTrang";
             this.cBTinhTrang.Size = new System.Drawing.Size(310, 37);
             this.cBTinhTrang.TabIndex = 13;
+            this.cBTinhTrang.SelectedIndexChanged += new System.EventHandler(this.cBTinhTrang_SelectedIndexChanged);
+            this.cBTinhTrang.Enter += new System.EventHandler(this.cBTinhTrang_Enter);
+            this.cBTinhTrang.Leave += new System.EventHandler(this.cBTinhTrang_Leave);
             // 
             // txtMaDon
             // 
