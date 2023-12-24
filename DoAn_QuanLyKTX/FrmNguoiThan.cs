@@ -15,6 +15,7 @@ namespace DoAn_QuanLyKTX
         QuanLyKyTucXaEntities4 db = new QuanLyKyTucXaEntities4();
         List<NGUOITHAN> dsNgThan = new List<NGUOITHAN>();
         List<SINHVIEN> dsSinhVien = new List<SINHVIEN>();
+        List<THOIGIANTHAM> dsTG = new List<THOIGIANTHAM>();
         NGUOITHAN NgThan = null;
         public FrmNguoiThan()
         {
@@ -26,6 +27,7 @@ namespace DoAn_QuanLyKTX
 
             dsNgThan = db.NGUOITHANs.ToList();
             dsSinhVien = db.SINHVIENs.ToList();
+            dsTG = db.THOIGIANTHAMs.ToList();
 
             cBMaSV.DataSource = dsSinhVien;
             cBSearch.DataSource = dsSinhVien;
@@ -126,6 +128,15 @@ namespace DoAn_QuanLyKTX
                             c.NgayCoc
                         };
             dgvSinhVien.DataSource = sVlst.ToList();
+
+            var tgLst = from c in db.THOIGIANTHAMs
+                        where c.MaNT == NgThan.MaNT
+                        select new
+                        {
+                            c.ThoiGianVao,
+                            c.ThoiGianRa
+                        };
+            dgvTGTham.DataSource = tgLst.ToList();
         }
 
         private void dgvThongTin_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -133,7 +144,35 @@ namespace DoAn_QuanLyKTX
             if (e.RowIndex < 0 || e.RowIndex > dgvThongTin.RowCount) return;
             displayCell();
         }
+        private DateTime tgVao()
+        {
+            if(dgvTGTham.RowCount != 0)
+            {
+                DataGridViewRow row = dgvTGTham.CurrentRow;
+                object tgv = row.Cells["ThoiGianVao"].Value;
+                DateTime tgvao = DateTime.Parse(tgv.ToString());
+                return tgvao;
+            }
+            return DateTime.Now;
+        }
+        private DateTime tgRa()
+        {
+            if (dgvTGTham.RowCount != 0)
+            {
+                DataGridViewRow row = dgvTGTham.CurrentRow;
+                object tgr = row.Cells["ThoiGianRa"].Value;
+                DateTime tgra = DateTime.Parse(tgr.ToString());
+                return tgra;
+            }
+            return DateTime.Now;
+        }
+        private void dgvTGTham_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0 || e.RowIndex > dgvTGTham.RowCount) return;
 
+            dtPThoiGianVao.Value = tgVao();
+            dtPThoiGianRa.Value = tgRa();
+        }
         private void btnAdd_Click(object sender, EventArgs e)
         {
             NgThan = new NGUOITHAN();

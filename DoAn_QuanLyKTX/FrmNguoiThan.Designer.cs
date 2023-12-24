@@ -37,13 +37,15 @@
             this.label10 = new System.Windows.Forms.Label();
             this.txtTenNT = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.txtSDT = new System.Windows.Forms.TextBox();
+            this.label11 = new System.Windows.Forms.Label();
             this.panel5 = new System.Windows.Forms.Panel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btnUpdateTg = new System.Windows.Forms.Button();
             this.btnAddTg = new System.Windows.Forms.Button();
-            this.dtPNgayRa = new System.Windows.Forms.DateTimePicker();
+            this.dtPThoiGianRa = new System.Windows.Forms.DateTimePicker();
             this.label9 = new System.Windows.Forms.Label();
-            this.dtPNgayVao = new System.Windows.Forms.DateTimePicker();
+            this.dtPThoiGianVao = new System.Windows.Forms.DateTimePicker();
             this.label13 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -69,8 +71,6 @@
             this.dgvSinhVien = new System.Windows.Forms.DataGridView();
             this.dgvThongTin = new System.Windows.Forms.DataGridView();
             this.btnClose = new System.Windows.Forms.Button();
-            this.txtSDT = new System.Windows.Forms.TextBox();
-            this.label11 = new System.Windows.Forms.Label();
             this.groupBox2.SuspendLayout();
             this.panel5.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -189,6 +189,25 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Nhập thông tin";
             // 
+            // txtSDT
+            // 
+            this.txtSDT.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtSDT.Location = new System.Drawing.Point(249, 265);
+            this.txtSDT.Multiline = true;
+            this.txtSDT.Name = "txtSDT";
+            this.txtSDT.Size = new System.Drawing.Size(221, 39);
+            this.txtSDT.TabIndex = 30;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label11.Location = new System.Drawing.Point(59, 272);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(73, 32);
+            this.label11.TabIndex = 29;
+            this.label11.Text = "SĐT";
+            // 
             // panel5
             // 
             this.panel5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(136)))), ((int)(((byte)(209)))));
@@ -203,9 +222,9 @@
             this.groupBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(128)))), ((int)(((byte)(185)))));
             this.groupBox1.Controls.Add(this.btnUpdateTg);
             this.groupBox1.Controls.Add(this.btnAddTg);
-            this.groupBox1.Controls.Add(this.dtPNgayRa);
+            this.groupBox1.Controls.Add(this.dtPThoiGianRa);
             this.groupBox1.Controls.Add(this.label9);
-            this.groupBox1.Controls.Add(this.dtPNgayVao);
+            this.groupBox1.Controls.Add(this.dtPThoiGianVao);
             this.groupBox1.Controls.Add(this.label13);
             this.groupBox1.ForeColor = System.Drawing.Color.White;
             this.groupBox1.Location = new System.Drawing.Point(3, 4);
@@ -247,15 +266,15 @@
             this.btnAddTg.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnAddTg.UseVisualStyleBackColor = false;
             // 
-            // dtPNgayRa
+            // dtPThoiGianRa
             // 
-            this.dtPNgayRa.CustomFormat = "dd/MM/yyyy";
-            this.dtPNgayRa.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dtPNgayRa.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.dtPNgayRa.Location = new System.Drawing.Point(216, 194);
-            this.dtPNgayRa.Name = "dtPNgayRa";
-            this.dtPNgayRa.Size = new System.Drawing.Size(221, 35);
-            this.dtPNgayRa.TabIndex = 43;
+            this.dtPThoiGianRa.CustomFormat = "dd/MM/yyyy";
+            this.dtPThoiGianRa.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dtPThoiGianRa.Format = System.Windows.Forms.DateTimePickerFormat.Time;
+            this.dtPThoiGianRa.Location = new System.Drawing.Point(216, 194);
+            this.dtPThoiGianRa.Name = "dtPThoiGianRa";
+            this.dtPThoiGianRa.Size = new System.Drawing.Size(221, 35);
+            this.dtPThoiGianRa.TabIndex = 43;
             // 
             // label9
             // 
@@ -266,15 +285,15 @@
             this.label9.TabIndex = 42;
             this.label9.Text = "Thời gian ra";
             // 
-            // dtPNgayVao
+            // dtPThoiGianVao
             // 
-            this.dtPNgayVao.CustomFormat = "dd/MM/yyyy";
-            this.dtPNgayVao.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dtPNgayVao.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.dtPNgayVao.Location = new System.Drawing.Point(216, 96);
-            this.dtPNgayVao.Name = "dtPNgayVao";
-            this.dtPNgayVao.Size = new System.Drawing.Size(221, 35);
-            this.dtPNgayVao.TabIndex = 41;
+            this.dtPThoiGianVao.CustomFormat = "dd/MM/yyyy";
+            this.dtPThoiGianVao.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dtPThoiGianVao.Format = System.Windows.Forms.DateTimePickerFormat.Time;
+            this.dtPThoiGianVao.Location = new System.Drawing.Point(216, 96);
+            this.dtPThoiGianVao.Name = "dtPThoiGianVao";
+            this.dtPThoiGianVao.Size = new System.Drawing.Size(221, 35);
+            this.dtPThoiGianVao.TabIndex = 41;
             // 
             // label13
             // 
@@ -531,6 +550,7 @@
             this.dgvTGTham.RowTemplate.Height = 28;
             this.dgvTGTham.Size = new System.Drawing.Size(354, 259);
             this.dgvTGTham.TabIndex = 19;
+            this.dgvTGTham.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvTGTham_CellClick);
             // 
             // label8
             // 
@@ -590,25 +610,6 @@
             this.btnClose.TabIndex = 10;
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
-            // 
-            // txtSDT
-            // 
-            this.txtSDT.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtSDT.Location = new System.Drawing.Point(249, 265);
-            this.txtSDT.Multiline = true;
-            this.txtSDT.Name = "txtSDT";
-            this.txtSDT.Size = new System.Drawing.Size(221, 39);
-            this.txtSDT.TabIndex = 30;
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label11.Location = new System.Drawing.Point(59, 272);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(73, 32);
-            this.label11.TabIndex = 29;
-            this.label11.Text = "SĐT";
             // 
             // FrmNguoiThan
             // 
@@ -686,9 +687,9 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Button btnUpdateTg;
         private System.Windows.Forms.Button btnAddTg;
-        private System.Windows.Forms.DateTimePicker dtPNgayRa;
+        private System.Windows.Forms.DateTimePicker dtPThoiGianRa;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.DateTimePicker dtPNgayVao;
+        private System.Windows.Forms.DateTimePicker dtPThoiGianVao;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.TextBox txtSDT;
         private System.Windows.Forms.Label label11;
