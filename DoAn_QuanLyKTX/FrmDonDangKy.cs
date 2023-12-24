@@ -271,7 +271,6 @@ namespace DoAn_QuanLyKTX
                 searchList = dsDonDK.Where(s => s.TinhTrang == searchString).ToList();
             }
             dgvThongTin.DataSource = null;
-            lblNull.Visible = false;
             dgvThongTin.DataSource = searchList;
 
             dgvThongTin.Columns[4].Width = 0;
