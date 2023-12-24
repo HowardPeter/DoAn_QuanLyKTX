@@ -12,7 +12,7 @@ namespace DoAn_QuanLyKTX
 {
     public partial class FrmDonDangKy : Form, ICondition
     {
-        QuanLyKyTucXaEntities3 db = new QuanLyKyTucXaEntities3();
+        QuanLyKyTucXaEntities4 db = new QuanLyKyTucXaEntities4();
         List<DONDANGKY> dsDonDK = new List<DONDANGKY>();
         DONDANGKY donDangKy = null;
 
