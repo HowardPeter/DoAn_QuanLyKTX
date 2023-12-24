@@ -63,11 +63,9 @@ namespace DoAn_QuanLyKTX
             if (ddk.Count == 0)
             {
                 dgvThongTin.DataSource = null;
-                lblNull.Visible = true;
             }
             else
             {
-                lblNull.Visible = false;
                 dgvThongTin.DataSource = null;
                 dgvThongTin.DataSource = ddk;
 

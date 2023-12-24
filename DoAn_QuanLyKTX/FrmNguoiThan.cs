@@ -187,7 +187,7 @@ namespace DoAn_QuanLyKTX
         {
             NgThan = new NGUOITHAN();
 
-            if (string.IsNullOrWhiteSpace(txtTenNT.Text) || string.IsNullOrWhiteSpace(txtQuanHe.Text))
+            if (string.IsNullOrWhiteSpace(txtTenNT.Text) || string.IsNullOrWhiteSpace(txtQuanHe.Text) || string.IsNullOrWhiteSpace(txtSDT.Text))
             {
                 MessageBox.Show("Vui lòng nhập đầy đủ thông tin!");
                 return;
@@ -232,7 +232,7 @@ namespace DoAn_QuanLyKTX
         {
             if (dsNgThan.Count == 0 || NgThan == null) return;
 
-            if (string.IsNullOrWhiteSpace(txtTenNT.Text) || string.IsNullOrWhiteSpace(txtQuanHe.Text))
+            if (string.IsNullOrWhiteSpace(txtTenNT.Text) || string.IsNullOrWhiteSpace(txtQuanHe.Text) || string.IsNullOrWhiteSpace(txtSDT.Text))
             {
                 MessageBox.Show("Vui lòng nhập đầy đủ thông tin!");
                 return;
