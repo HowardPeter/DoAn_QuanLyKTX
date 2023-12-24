@@ -41,5 +41,9 @@ namespace DoAn_QuanLyKTX
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PHIKTX> PHIKTXes { get; set; }
         public virtual PHONGKYTUC PHONGKYTUC { get; set; }
+        public override string ToString()
+        {
+            return MaSV.ToString();
+        }
     }
 }

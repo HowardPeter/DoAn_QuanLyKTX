@@ -14,7 +14,7 @@ namespace DoAn_QuanLyKTX
 {
     public partial class FrmNhanVien : Form, ICondition
     {
-        QuanLyKyTucXaEntities3 db = new QuanLyKyTucXaEntities3();
+        QuanLyKyTucXaEntities4 db = new QuanLyKyTucXaEntities4();
         List<NHANVIEN> dsNV = new List<NHANVIEN>();
         NHANVIEN NhVien = null;
         public FrmNhanVien()

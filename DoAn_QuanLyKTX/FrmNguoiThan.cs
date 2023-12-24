@@ -7,15 +7,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace DoAn_QuanLyKTX
 {
-    public partial class FrmNguoiThan : Form
+    public partial class FrmNguoiThan : Form, ICondition
     {
-        QuanLyKyTucXaEntities3 db = new QuanLyKyTucXaEntities3();
+        QuanLyKyTucXaEntities4 db = new QuanLyKyTucXaEntities4();
         List<NGUOITHAN> dsNgThan = new List<NGUOITHAN>();
         List<SINHVIEN> dsSinhVien = new List<SINHVIEN>();
+        List<THOIGIANTHAM> dsTG = new List<THOIGIANTHAM>();
         NGUOITHAN NgThan = null;
+        THOIGIANTHAM tgTham = null;
         public FrmNguoiThan()
         {
             InitializeComponent();
@@ -26,6 +29,7 @@ namespace DoAn_QuanLyKTX
 
             dsNgThan = db.NGUOITHANs.ToList();
             dsSinhVien = db.SINHVIENs.ToList();
+            dsTG = db.THOIGIANTHAMs.ToList();
 
             cBMaSV.DataSource = dsSinhVien;
             cBSearch.DataSource = dsSinhVien;
@@ -34,16 +38,25 @@ namespace DoAn_QuanLyKTX
 
             firstLoadData();
         }
+        private string maNTValue()
+        {
+            if (dgvThongTin.RowCount != 0)
+            {
+                DataGridViewRow row = dgvThongTin.CurrentRow;
+                object ma = row.Cells["MaNT"].Value;
+                string maNT = ma.ToString();
+                return maNT;
+            }
+            return null;
+        }
         void firstLoadData()
         {
             if (dgvThongTin.DataSource == null || dsNgThan.Count == 0) return;
 
-            DataGridViewRow row = dgvThongTin.CurrentRow;
-            int id = row.Index;
-            if (id > dsNgThan.Count - 1) return;
-            NgThan = dsNgThan[id];
+            NgThan = dsNgThan.SingleOrDefault(n => n.MaNT == maNTValue());
 
             txtTenNT.Text = NgThan.TenNT.ToString();
+            txtSDT.Text = NgThan.SoDT;
             txtQuanHe.Text = NgThan.QuanHe.ToString();
 
             string maSV = NgThan.MaSV.ToString();
@@ -59,43 +72,37 @@ namespace DoAn_QuanLyKTX
                 rBGTNu.Checked = true;
             }
         }
+        void hideColumn(int c, DataGridView d)
+        {
+            d.Columns[c].Width = 0;
+            d.Columns[c].Visible = false;
+        }
         void LoadData(List<NGUOITHAN> nt)
         {
-            if(nt.Count == 0) return;
+            if (nt.Count == 0) return;
 
             dgvThongTin.DataSource = null;
             dgvThongTin.DataSource = nt;
 
-            dgvThongTin.Columns[4].Width = 0;
-            dgvThongTin.Columns[4].Visible = false;
+            hideColumn(6, dgvThongTin);
+            hideColumn(7, dgvThongTin);
 
-            dgvThongTin.Columns[3].Width -= 30;
+            dgvThongTin.Columns[2].Width -= 50;
+            dgvThongTin.Columns[3].Width -= 50;
+            dgvThongTin.Columns[4].Width -= 20;
         }
         private void btnClose_Click(object sender, EventArgs e)
         {
             this.Close();
         }
 
-        private int maNTSVValue()
-        {
-            DataGridViewRow row = dgvThongTin.CurrentRow;
-            object n = row.Cells["MaSV"].Value;
-            int maNTSVValue = Convert.ToInt32(n);
-            return maNTSVValue;
-        }
-        private string tenNTValue()
-        {
-            DataGridViewRow row = dgvThongTin.CurrentRow;
-            object n = row.Cells["TenNT"].Value;
-            string tenNTValue = Convert.ToString(n);
-            return tenNTValue;
-        }
         private void displayCell()
         {
-            NgThan = dsNgThan.Where(p => p.MaSV == maNTSVValue() && p.TenNT == tenNTValue()).SingleOrDefault();
+            NgThan = dsNgThan.SingleOrDefault(p => p.MaNT == maNTValue());
 
             txtTenNT.Text = NgThan.TenNT.ToString();
             txtQuanHe.Text = NgThan.QuanHe.ToString();
+            txtSDT.Text = NgThan.SoDT;
             cBMaSV.Text = NgThan.MaSV.ToString();
             if (NgThan.GioiTinh == "Nam")
             {
@@ -124,6 +131,15 @@ namespace DoAn_QuanLyKTX
                             c.NgayCoc
                         };
             dgvSinhVien.DataSource = sVlst.ToList();
+
+            var tgLst = from c in db.THOIGIANTHAMs
+                        where c.MaNT == NgThan.MaNT
+                        select new
+                        {
+                            c.ThoiGianVao,
+                            c.ThoiGianRa
+                        };
+            dgvTGTham.DataSource = tgLst.ToList();
         }
 
         private void dgvThongTin_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -131,7 +147,42 @@ namespace DoAn_QuanLyKTX
             if (e.RowIndex < 0 || e.RowIndex > dgvThongTin.RowCount) return;
             displayCell();
         }
+        private DateTime tgVao()
+        {
+            if(dgvTGTham.RowCount != 0)
+            {
+                DataGridViewRow row = dgvTGTham.CurrentRow;
+                object tgv = row.Cells["ThoiGianVao"].Value;
+                DateTime tgvao = DateTime.Parse(tgv.ToString());
+                return tgvao;
+            }
+            return DateTime.Now;
+        }
+        private DateTime tgRa()
+        {
+            if (dgvTGTham.RowCount != 0)
+            {
+                DataGridViewRow row = dgvTGTham.CurrentRow;
+                object tgr = row.Cells["ThoiGianRa"].Value;
+                DateTime tgra = DateTime.Parse(tgr.ToString());
+                return tgra;
+            }
+            return DateTime.Now;
+        }
+        private void dgvTGTham_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex < 0 || e.RowIndex > dgvTGTham.RowCount) return;
 
+            dtPThoiGianVao.Value = tgVao();
+            dtPThoiGianRa.Value = tgRa();
+        }
+        private string getMaNT()
+        {
+            string ten = txtTenNT.Text.Trim();
+            string[] words = ten.Split(' ');
+            string letters = new string(words.Select(s => s.Length > 0 ? char.ToLower(s[0]) : ' ').ToArray());
+            return letters + cBMaSV.Text;
+        }
         private void btnAdd_Click(object sender, EventArgs e)
         {
             NgThan = new NGUOITHAN();
@@ -141,12 +192,20 @@ namespace DoAn_QuanLyKTX
                 MessageBox.Show("Vui lòng nhập đầy đủ thông tin!");
                 return;
             }
-
+            NgThan.MaNT = getMaNT();
             NgThan.TenNT = txtTenNT.Text;
             NgThan.QuanHe = txtQuanHe.Text;
+            NgThan.SoDT = txtSDT.Text;
 
-            string maSV = cBMaSV.SelectedItem.ToString();
-            NgThan.MaSV = int.Parse(maSV);
+            if (cBMaSV.SelectedItem != null)
+            {
+                string maSV = cBMaSV.SelectedItem.ToString();
+                NgThan.MaSV = int.Parse(maSV);
+            }
+            else
+            {
+                NgThan.MaSV = int.Parse(cBMaSV.Text);
+            }
             if (rBGTNam.Checked == true)
             {
                 NgThan.GioiTinh = "Nam";
@@ -200,7 +259,12 @@ namespace DoAn_QuanLyKTX
         {
             if (dsNgThan.Count == 0 || NgThan == null) return;
 
-            NgThan = dsNgThan.Where(p => p.MaSV == maNTSVValue() && p.TenNT == tenNTValue()).SingleOrDefault();
+            DialogResult dlr = MessageBox.Show("Xóa thông tin người thân sẽ xóa thông tin thời gian ra vào của người thân.\nBạn có chắc muốn xóa?","Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if(dlr == DialogResult.No)
+            {
+                return;
+            }
+            NgThan = dsNgThan.SingleOrDefault(p => p.MaNT == maNTValue());
             dsNgThan.Remove(NgThan);
             db.NGUOITHANs.Remove(NgThan);
             db.SaveChanges();
@@ -255,6 +319,75 @@ namespace DoAn_QuanLyKTX
             if (dsNgThan.Count == 0 || NgThan == null) return;
 
             LoadData(dsNgThan);
+        }
+        void LoadDataTgTham(List<THOIGIANTHAM> tgt)
+        {
+            tgt = dsTG.Where(t => t.MaNT == maNTValue()).ToList();
+            if(tgt.Count == 0) return;
+
+            dgvTGTham.DataSource = null;
+            dgvTGTham.DataSource = tgt;
+
+            hideColumn(3, dgvTGTham);
+            hideColumn(4, dgvTGTham);
+            hideColumn(0, dgvTGTham);
+        }
+        public bool CheckDieuKienSQL()
+        {
+            DateTime dtV = dtPThoiGianVao.Value;
+            DateTime dtR = dtPThoiGianRa.Value;
+            return dtV <= DateTime.Now && dtR.Day >= dtV.Day && dtR.Day <= dtV.Day + 1 && dtR.Month == dtV.Month && dtR.Year == dtV.Year;
+        }
+        private string getMaTG()
+        {
+            DateTime dtV = dtPThoiGianVao.Value;
+            DateTime dtR = dtPThoiGianRa.Value;
+            string dtv = dtV.ToString("ddMMyyyyHHmmss");
+            string dtr = dtR.ToString("ddMMyyyyHHmmss");
+            return dtv + dtr;
+        }
+        private void btnAddTg_Click(object sender, EventArgs e)
+        {
+            if (dsNgThan.Count == 0 || NgThan == null) return;
+
+            THOIGIANTHAM t = new THOIGIANTHAM();
+
+            if (!CheckDieuKienSQL())
+            {
+                MessageBox.Show("Thời gian không hợp lệ!\nThời gian ra vào không thể lớn hơn ngày hiện tại và người thân chỉ được ở lại ký túc không quá 1 ngày.");
+                return;
+            }
+            t.MaTG = getMaTG();
+            t.ThoiGianVao = dtPThoiGianVao.Value;
+            t.ThoiGianRa = dtPThoiGianRa.Value;
+            t.MaNT = getMaNT();
+            
+            dsTG.Add(t);
+            db.THOIGIANTHAMs.Add(t);
+            db.SaveChanges();
+
+            dtPThoiGianVao.Value = DateTime.Now;
+            dtPThoiGianRa.Value = DateTime.Now;
+
+            LoadDataTgTham(dsTG);
+            MessageBox.Show("Thêm thông tin thời gian thăm của thân nhân thành công.");
+        }
+
+        private void btnUpdateTg_Click(object sender, EventArgs e)
+        {
+            if (dsNgThan.Count == 0 || NgThan == null) return;
+
+            if (!CheckDieuKienSQL())
+            {
+                MessageBox.Show("Thời gian không hợp lệ!\nThời gian ra vào không thể lớn hơn ngày hiện tại và người thân chỉ được ở lại ký túc không quá 1 ngày.");
+                return;
+            }
+            tgTham.ThoiGianVao = dtPThoiGianVao.Value;
+            tgTham.ThoiGianRa = dtPThoiGianRa.Value;
+
+            LoadDataTgTham(dsTG);
+            db.SaveChanges();
+            MessageBox.Show("Cập nhật thông tin thời gian thăm của thân nhân thành công!");
         }
     }
 }

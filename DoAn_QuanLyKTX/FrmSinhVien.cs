@@ -12,7 +12,7 @@ namespace DoAn_QuanLyKTX
 {
     public partial class FrmSinhVien : Form, ICondition
     {
-        QuanLyKyTucXaEntities3 db = new QuanLyKyTucXaEntities3();
+        QuanLyKyTucXaEntities4 db = new QuanLyKyTucXaEntities4();
         List<SINHVIEN> dsSV = new List<SINHVIEN>();
         List<PHONGKYTUC> dsphong = new List<PHONGKYTUC>();
         SINHVIEN sinhvien = null;

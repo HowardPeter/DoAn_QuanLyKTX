@@ -12,7 +12,7 @@ namespace DoAn_QuanLyKTX
 {
     public partial class FrmDonDangKy : Form, ICondition
     {
-        QuanLyKyTucXaEntities3 db = new QuanLyKyTucXaEntities3();
+        QuanLyKyTucXaEntities4 db = new QuanLyKyTucXaEntities4();
         List<DONDANGKY> dsDonDK = new List<DONDANGKY>();
         DONDANGKY donDangKy = null;
 
@@ -59,20 +59,33 @@ namespace DoAn_QuanLyKTX
         void LoadData(List<DONDANGKY> ddk)
         {
             ddk = dsDonDK.Where(d => d.TinhTrang == "Chờ phê duyệt").ToList();
-            if (dsDonDK.Count == 0 || ddk.Count == 0) return;
-            dgvThongTin.DataSource = null;
-            dgvThongTin.DataSource = ddk;
+            if (dsDonDK.Count == 0) return;
+            if (ddk.Count == 0)
+            {
+                dgvThongTin.DataSource = null;
+                lblNull.Visible = true;
+            }
+            else
+            {
+                lblNull.Visible = false;
+                dgvThongTin.DataSource = null;
+                dgvThongTin.DataSource = ddk;
 
-            dgvThongTin.Columns[4].Width = 0;
-            dgvThongTin.Columns[4].Visible = false;
+                dgvThongTin.Columns[4].Width = 0;
+                dgvThongTin.Columns[4].Visible = false;
+            }
         }
 
         private int maDonValue()
         {
-            DataGridViewRow row = dgvThongTin.CurrentRow;
-            object n = row.Cells["MaDon"].Value;
-            int maDonValue = Convert.ToInt32(n);
-            return maDonValue;
+            if (dgvThongTin.RowCount != 0)
+            {
+                DataGridViewRow row = dgvThongTin.CurrentRow;
+                object n = row.Cells["MaDon"].Value;
+                int maDonValue = Convert.ToInt32(n);
+                return maDonValue;
+            }
+            return 0;
         }
 
         private void displayCell()
@@ -260,6 +273,7 @@ namespace DoAn_QuanLyKTX
                 searchList = dsDonDK.Where(s => s.TinhTrang == searchString).ToList();
             }
             dgvThongTin.DataSource = null;
+            lblNull.Visible = false;
             dgvThongTin.DataSource = searchList;
 
             dgvThongTin.Columns[4].Width = 0;

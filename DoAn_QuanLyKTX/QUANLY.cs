@@ -31,5 +31,9 @@ namespace DoAn_QuanLyKTX
         public virtual ICollection<PHONGKYTUC> PHONGKYTUCs { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TAIKHOANQL> TAIKHOANQLs { get; set; }
+        public override string ToString()
+        {
+            return MaQL.ToString();
+        }
     }
 }

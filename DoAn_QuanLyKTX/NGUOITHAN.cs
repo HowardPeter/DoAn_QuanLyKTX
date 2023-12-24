@@ -14,13 +14,21 @@ namespace DoAn_QuanLyKTX
     
     public partial class NGUOITHAN
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public NGUOITHAN()
+        {
+            this.THOIGIANTHAMs = new HashSet<THOIGIANTHAM>();
+        }
+    
+        public string MaNT { get; set; }
         public string TenNT { get; set; }
-        public int MaSV { get; set; }
+        public Nullable<int> MaSV { get; set; }
         public string GioiTinh { get; set; }
         public string QuanHe { get; set; }
         public string SoDT { get; set; }
     
-        public virtual THOIGIANTHAM THOIGIANTHAM { get; set; }
         public virtual SINHVIEN SINHVIEN { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<THOIGIANTHAM> THOIGIANTHAMs { get; set; }
     }
 }

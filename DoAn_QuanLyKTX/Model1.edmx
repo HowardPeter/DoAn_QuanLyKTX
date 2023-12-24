@@ -16,11 +16,11 @@
         </EntityType>
         <EntityType Name="NGUOITHAN">
           <Key>
-            <PropertyRef Name="TenNT" />
-            <PropertyRef Name="MaSV" />
+            <PropertyRef Name="MaNT" />
           </Key>
-          <Property Name="TenNT" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="MaSV" Type="int" Nullable="false" />
+          <Property Name="MaNT" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="TenNT" Type="nvarchar" MaxLength="50" />
+          <Property Name="MaSV" Type="int" />
           <Property Name="GioiTinh" Type="nvarchar" MaxLength="3" />
           <Property Name="QuanHe" Type="nvarchar" MaxLength="10" />
           <Property Name="SoDT" Type="varchar" MaxLength="11" />
@@ -106,13 +106,12 @@
         </EntityType>
         <EntityType Name="THOIGIANTHAM">
           <Key>
-            <PropertyRef Name="TenNT" />
-            <PropertyRef Name="MaSV" />
+            <PropertyRef Name="MaTG" />
           </Key>
-          <Property Name="TenNT" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="MaSV" Type="int" Nullable="false" />
+          <Property Name="MaTG" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="ThoiGianVao" Type="datetime" Nullable="false" />
           <Property Name="ThoiGianRa" Type="datetime" Nullable="false" />
+          <Property Name="MaNT" Type="varchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="TRANGTHIETBI">
           <Key>
@@ -122,20 +121,6 @@
           <Property Name="TenTB" Type="nvarchar" MaxLength="50" />
           <Property Name="MaPhong" Type="varchar" MaxLength="10" />
         </EntityType>
-        <Association Name="FK__THOIGIANTHAM__42E1EEFE">
-          <End Role="NGUOITHAN" Type="Self.NGUOITHAN" Multiplicity="1" />
-          <End Role="THOIGIANTHAM" Type="Self.THOIGIANTHAM" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="NGUOITHAN">
-              <PropertyRef Name="TenNT" />
-              <PropertyRef Name="MaSV" />
-            </Principal>
-            <Dependent Role="THOIGIANTHAM">
-              <PropertyRef Name="TenNT" />
-              <PropertyRef Name="MaSV" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_DONDANGKY_MaSV">
           <End Role="SINHVIEN" Type="Self.SINHVIEN" Multiplicity="0..1" />
           <End Role="DONDANGKY" Type="Self.DONDANGKY" Multiplicity="*" />
@@ -149,7 +134,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_NGUOITHAN_MaSV">
-          <End Role="SINHVIEN" Type="Self.SINHVIEN" Multiplicity="1" />
+          <End Role="SINHVIEN" Type="Self.SINHVIEN" Multiplicity="0..1" />
           <End Role="NGUOITHAN" Type="Self.NGUOITHAN" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="SINHVIEN">
@@ -208,6 +193,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_THOIGIANTHAM_MaNT">
+          <End Role="NGUOITHAN" Type="Self.NGUOITHAN" Multiplicity="0..1" />
+          <End Role="THOIGIANTHAM" Type="Self.THOIGIANTHAM" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NGUOITHAN">
+              <PropertyRef Name="MaNT" />
+            </Principal>
+            <Dependent Role="THOIGIANTHAM">
+              <PropertyRef Name="MaNT" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_TRANGTHIETBI_MaPhong">
           <End Role="PHONGKYTUC" Type="Self.PHONGKYTUC" Multiplicity="0..1" />
           <End Role="TRANGTHIETBI" Type="Self.TRANGTHIETBI" Multiplicity="*" />
@@ -232,10 +229,6 @@
           <EntitySet Name="TAIKHOANQL" EntityType="Self.TAIKHOANQL" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="THOIGIANTHAM" EntityType="Self.THOIGIANTHAM" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TRANGTHIETBI" EntityType="Self.TRANGTHIETBI" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__THOIGIANTHAM__42E1EEFE" Association="Self.FK__THOIGIANTHAM__42E1EEFE">
-            <End Role="NGUOITHAN" EntitySet="NGUOITHAN" />
-            <End Role="THOIGIANTHAM" EntitySet="THOIGIANTHAM" />
-          </AssociationSet>
           <AssociationSet Name="FK_DONDANGKY_MaSV" Association="Self.FK_DONDANGKY_MaSV">
             <End Role="SINHVIEN" EntitySet="SINHVIEN" />
             <End Role="DONDANGKY" EntitySet="DONDANGKY" />
@@ -260,6 +253,10 @@
             <End Role="QUANLY" EntitySet="QUANLY" />
             <End Role="TAIKHOANQL" EntitySet="TAIKHOANQL" />
           </AssociationSet>
+          <AssociationSet Name="FK_THOIGIANTHAM_MaNT" Association="Self.FK_THOIGIANTHAM_MaNT">
+            <End Role="NGUOITHAN" EntitySet="NGUOITHAN" />
+            <End Role="THOIGIANTHAM" EntitySet="THOIGIANTHAM" />
+          </AssociationSet>
           <AssociationSet Name="FK_TRANGTHIETBI_MaPhong" Association="Self.FK_TRANGTHIETBI_MaPhong">
             <End Role="PHONGKYTUC" EntitySet="PHONGKYTUC" />
             <End Role="TRANGTHIETBI" EntitySet="TRANGTHIETBI" />
@@ -282,16 +279,16 @@
         </EntityType>
         <EntityType Name="NGUOITHAN">
           <Key>
-            <PropertyRef Name="TenNT" />
-            <PropertyRef Name="MaSV" />
+            <PropertyRef Name="MaNT" />
           </Key>
-          <Property Name="TenNT" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="MaSV" Type="Int32" Nullable="false" />
+          <Property Name="MaNT" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TenNT" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MaSV" Type="Int32" />
           <Property Name="GioiTinh" Type="String" MaxLength="3" FixedLength="false" Unicode="true" />
           <Property Name="QuanHe" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="SoDT" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="THOIGIANTHAM" Relationship="Self.FK__THOIGIANTHAM__42E1EEFE" FromRole="NGUOITHAN" ToRole="THOIGIANTHAM" />
           <NavigationProperty Name="SINHVIEN" Relationship="Self.FK_NGUOITHAN_MaSV" FromRole="NGUOITHAN" ToRole="SINHVIEN" />
+          <NavigationProperty Name="THOIGIANTHAMs" Relationship="Self.FK_THOIGIANTHAM_MaNT" FromRole="NGUOITHAN" ToRole="THOIGIANTHAM" />
         </EntityType>
         <EntityType Name="NHANVIEN">
           <Key>
@@ -385,14 +382,13 @@
         </EntityType>
         <EntityType Name="THOIGIANTHAM">
           <Key>
-            <PropertyRef Name="TenNT" />
-            <PropertyRef Name="MaSV" />
+            <PropertyRef Name="MaTG" />
           </Key>
-          <Property Name="TenNT" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="MaSV" Type="Int32" Nullable="false" />
+          <Property Name="MaTG" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="ThoiGianVao" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="ThoiGianRa" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="NGUOITHAN" Relationship="Self.FK__THOIGIANTHAM__42E1EEFE" FromRole="THOIGIANTHAM" ToRole="NGUOITHAN" />
+          <Property Name="MaNT" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="NGUOITHAN" Relationship="Self.FK_THOIGIANTHAM_MaNT" FromRole="THOIGIANTHAM" ToRole="NGUOITHAN" />
         </EntityType>
         <EntityType Name="TRANGTHIETBI">
           <Key>
@@ -415,22 +411,8 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__THOIGIANTHAM__42E1EEFE">
-          <End Role="NGUOITHAN" Type="Self.NGUOITHAN" Multiplicity="1" />
-          <End Role="THOIGIANTHAM" Type="Self.THOIGIANTHAM" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="NGUOITHAN">
-              <PropertyRef Name="TenNT" />
-              <PropertyRef Name="MaSV" />
-            </Principal>
-            <Dependent Role="THOIGIANTHAM">
-              <PropertyRef Name="TenNT" />
-              <PropertyRef Name="MaSV" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_NGUOITHAN_MaSV">
-          <End Role="SINHVIEN" Type="Self.SINHVIEN" Multiplicity="1" />
+          <End Role="SINHVIEN" Type="Self.SINHVIEN" Multiplicity="0..1" />
           <End Role="NGUOITHAN" Type="Self.NGUOITHAN" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="SINHVIEN">
@@ -438,6 +420,18 @@
             </Principal>
             <Dependent Role="NGUOITHAN">
               <PropertyRef Name="MaSV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_THOIGIANTHAM_MaNT">
+          <End Role="NGUOITHAN" Type="Self.NGUOITHAN" Multiplicity="0..1" />
+          <End Role="THOIGIANTHAM" Type="Self.THOIGIANTHAM" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NGUOITHAN">
+              <PropertyRef Name="MaNT" />
+            </Principal>
+            <Dependent Role="THOIGIANTHAM">
+              <PropertyRef Name="MaNT" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -501,7 +495,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="QuanLyKyTucXaEntities3" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="QuanLyKyTucXaEntities4" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="DONDANGKies" EntityType="Self.DONDANGKY" />
           <EntitySet Name="NGUOITHANs" EntityType="Self.NGUOITHAN" />
           <EntitySet Name="NHANVIENs" EntityType="Self.NHANVIEN" />
@@ -517,13 +511,13 @@
             <End Role="SINHVIEN" EntitySet="SINHVIENs" />
             <End Role="DONDANGKY" EntitySet="DONDANGKies" />
           </AssociationSet>
-          <AssociationSet Name="FK__THOIGIANTHAM__42E1EEFE" Association="Self.FK__THOIGIANTHAM__42E1EEFE">
-            <End Role="NGUOITHAN" EntitySet="NGUOITHANs" />
-            <End Role="THOIGIANTHAM" EntitySet="THOIGIANTHAMs" />
-          </AssociationSet>
           <AssociationSet Name="FK_NGUOITHAN_MaSV" Association="Self.FK_NGUOITHAN_MaSV">
             <End Role="SINHVIEN" EntitySet="SINHVIENs" />
             <End Role="NGUOITHAN" EntitySet="NGUOITHANs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_THOIGIANTHAM_MaNT" Association="Self.FK_THOIGIANTHAM_MaNT">
+            <End Role="NGUOITHAN" EntitySet="NGUOITHANs" />
+            <End Role="THOIGIANTHAM" EntitySet="THOIGIANTHAMs" />
           </AssociationSet>
           <AssociationSet Name="FK_PHIKTX_MaSV" Association="Self.FK_PHIKTX_MaSV">
             <End Role="SINHVIEN" EntitySet="SINHVIENs" />
@@ -551,7 +545,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="QuanLyKyTucXaModelStoreContainer" CdmEntityContainer="QuanLyKyTucXaEntities3">
+        <EntityContainerMapping StorageEntityContainer="QuanLyKyTucXaModelStoreContainer" CdmEntityContainer="QuanLyKyTucXaEntities4">
           <EntitySetMapping Name="DONDANGKies">
             <EntityTypeMapping TypeName="QuanLyKyTucXaModel.DONDANGKY">
               <MappingFragment StoreEntitySet="DONDANGKY">
@@ -565,6 +559,7 @@
           <EntitySetMapping Name="NGUOITHANs">
             <EntityTypeMapping TypeName="QuanLyKyTucXaModel.NGUOITHAN">
               <MappingFragment StoreEntitySet="NGUOITHAN">
+                <ScalarProperty Name="MaNT" ColumnName="MaNT" />
                 <ScalarProperty Name="TenNT" ColumnName="TenNT" />
                 <ScalarProperty Name="MaSV" ColumnName="MaSV" />
                 <ScalarProperty Name="GioiTinh" ColumnName="GioiTinh" />
@@ -662,10 +657,10 @@
           <EntitySetMapping Name="THOIGIANTHAMs">
             <EntityTypeMapping TypeName="QuanLyKyTucXaModel.THOIGIANTHAM">
               <MappingFragment StoreEntitySet="THOIGIANTHAM">
-                <ScalarProperty Name="TenNT" ColumnName="TenNT" />
-                <ScalarProperty Name="MaSV" ColumnName="MaSV" />
+                <ScalarProperty Name="MaTG" ColumnName="MaTG" />
                 <ScalarProperty Name="ThoiGianVao" ColumnName="ThoiGianVao" />
                 <ScalarProperty Name="ThoiGianRa" ColumnName="ThoiGianRa" />
+                <ScalarProperty Name="MaNT" ColumnName="MaNT" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

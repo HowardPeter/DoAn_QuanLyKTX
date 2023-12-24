@@ -12,7 +12,7 @@ namespace DoAn_QuanLyKTX
 {
     public partial class FrmTrangThietBi : Form
     {
-        QuanLyKyTucXaEntities3 db = new QuanLyKyTucXaEntities3();
+        QuanLyKyTucXaEntities4 db = new QuanLyKyTucXaEntities4();
         List<TRANGTHIETBI> dsThietBi = new List<TRANGTHIETBI>();
         List<PHONGKYTUC> dsPhong = new List<PHONGKYTUC>();
         TRANGTHIETBI thietbi = null;
