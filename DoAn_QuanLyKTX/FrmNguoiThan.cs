@@ -7,16 +7,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace DoAn_QuanLyKTX
 {
-    public partial class FrmNguoiThan : Form
+    public partial class FrmNguoiThan : Form, ICondition
     {
         QuanLyKyTucXaEntities4 db = new QuanLyKyTucXaEntities4();
         List<NGUOITHAN> dsNgThan = new List<NGUOITHAN>();
         List<SINHVIEN> dsSinhVien = new List<SINHVIEN>();
         List<THOIGIANTHAM> dsTG = new List<THOIGIANTHAM>();
         NGUOITHAN NgThan = null;
+        THOIGIANTHAM tgTham = null;
         public FrmNguoiThan()
         {
             InitializeComponent();
@@ -54,6 +56,7 @@ namespace DoAn_QuanLyKTX
             NgThan = dsNgThan.SingleOrDefault(n => n.MaNT == maNTValue());
 
             txtTenNT.Text = NgThan.TenNT.ToString();
+            txtSDT.Text = NgThan.SoDT;
             txtQuanHe.Text = NgThan.QuanHe.ToString();
 
             string maSV = NgThan.MaSV.ToString();
@@ -69,10 +72,10 @@ namespace DoAn_QuanLyKTX
                 rBGTNu.Checked = true;
             }
         }
-        void hideColumn(int c)
+        void hideColumn(int c, DataGridView d)
         {
-            dgvThongTin.Columns[c].Width = 0;
-            dgvThongTin.Columns[c].Visible = false;
+            d.Columns[c].Width = 0;
+            d.Columns[c].Visible = false;
         }
         void LoadData(List<NGUOITHAN> nt)
         {
@@ -81,8 +84,8 @@ namespace DoAn_QuanLyKTX
             dgvThongTin.DataSource = null;
             dgvThongTin.DataSource = nt;
 
-            hideColumn(6);
-            hideColumn(7);
+            hideColumn(6, dgvThongTin);
+            hideColumn(7, dgvThongTin);
 
             dgvThongTin.Columns[2].Width -= 50;
             dgvThongTin.Columns[3].Width -= 50;
@@ -173,6 +176,13 @@ namespace DoAn_QuanLyKTX
             dtPThoiGianVao.Value = tgVao();
             dtPThoiGianRa.Value = tgRa();
         }
+        private string getMaNT()
+        {
+            string ten = txtTenNT.Text.Trim();
+            string[] words = ten.Split(' ');
+            string letters = new string(words.Select(s => s.Length > 0 ? char.ToLower(s[0]) : ' ').ToArray());
+            return letters + cBMaSV.Text;
+        }
         private void btnAdd_Click(object sender, EventArgs e)
         {
             NgThan = new NGUOITHAN();
@@ -182,7 +192,7 @@ namespace DoAn_QuanLyKTX
                 MessageBox.Show("Vui lòng nhập đầy đủ thông tin!");
                 return;
             }
-
+            NgThan.MaNT = getMaNT();
             NgThan.TenNT = txtTenNT.Text;
             NgThan.QuanHe = txtQuanHe.Text;
             NgThan.SoDT = txtSDT.Text;
@@ -249,6 +259,11 @@ namespace DoAn_QuanLyKTX
         {
             if (dsNgThan.Count == 0 || NgThan == null) return;
 
+            DialogResult dlr = MessageBox.Show("Xóa thông tin người thân sẽ xóa thông tin thời gian ra vào của người thân.\nBạn có chắc muốn xóa?","Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if(dlr == DialogResult.No)
+            {
+                return;
+            }
             NgThan = dsNgThan.SingleOrDefault(p => p.MaNT == maNTValue());
             dsNgThan.Remove(NgThan);
             db.NGUOITHANs.Remove(NgThan);
@@ -304,6 +319,72 @@ namespace DoAn_QuanLyKTX
             if (dsNgThan.Count == 0 || NgThan == null) return;
 
             LoadData(dsNgThan);
+        }
+        void LoadDataTgTham(List<THOIGIANTHAM> tgt)
+        {
+            dgvTGTham.DataSource = null;
+            dgvTGTham.DataSource = tgt;
+
+            hideColumn(3, dgvTGTham);
+            hideColumn(3, dgvTGTham);
+            hideColumn(0, dgvTGTham);
+        }
+        public bool CheckDieuKienSQL()
+        {
+            DateTime dtV = dtPThoiGianVao.Value;
+            DateTime dtR = dtPThoiGianRa.Value;
+            return (dtV <= DateTime.Now && dtR <= DateTime.Now) && (dtR.Day >= dtV.Day && dtR.Day <= dtV.Day + 1 && dtR.Month == dtV.Month && dtR.Year == dtV.Year);
+        }
+        private string getMaTG()
+        {
+            DateTime dtV = dtPThoiGianVao.Value;
+            DateTime dtR = dtPThoiGianRa.Value;
+            string dtv = dtV.ToString("ddMMyyyyHHmmss");
+            string dtr = dtR.ToString("ddMMyyyyHHmmss");
+            return dtv + dtr;
+        }
+        private void btnAddTg_Click(object sender, EventArgs e)
+        {
+            if (dsNgThan.Count == 0 || NgThan == null) return;
+
+            THOIGIANTHAM t = new THOIGIANTHAM();
+
+            if (!CheckDieuKienSQL())
+            {
+                MessageBox.Show("Thời gian không hợp lệ!\nThời gian ra vào không thể lớn hơn ngày hiện tại và người thân chỉ được ở lại ký túc không quá 1 ngày.");
+                return;
+            }
+            t.MaTG = getMaTG();
+            t.ThoiGianVao = dtPThoiGianVao.Value;
+            t.ThoiGianRa = dtPThoiGianRa.Value;
+            t.MaNT = getMaNT();
+            
+            dsTG.Add(t);
+            db.THOIGIANTHAMs.Add(t);
+            db.SaveChanges();
+
+            dtPThoiGianVao.Value = DateTime.Now;
+            dtPThoiGianRa.Value = DateTime.Now;
+
+            LoadDataTgTham(dsTG);
+            MessageBox.Show("Thêm thông tin thời gian thăm của thân nhân thành công.");
+        }
+
+        private void btnUpdateTg_Click(object sender, EventArgs e)
+        {
+            if (dsNgThan.Count == 0 || NgThan == null) return;
+
+            if (!CheckDieuKienSQL())
+            {
+                MessageBox.Show("Thời gian không hợp lệ!\nThời gian ra vào không thể lớn hơn ngày hiện tại và người thân chỉ được ở lại ký túc không quá 1 ngày.");
+                return;
+            }
+            tgTham.ThoiGianVao = dtPThoiGianVao.Value;
+            tgTham.ThoiGianRa = dtPThoiGianRa.Value;
+
+            LoadDataTgTham(dsTG);
+            db.SaveChanges();
+            MessageBox.Show("Cập nhật thông tin thời gian thăm của thân nhân thành công!");
         }
     }
 }

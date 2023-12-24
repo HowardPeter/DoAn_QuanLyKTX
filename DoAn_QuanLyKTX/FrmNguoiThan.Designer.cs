@@ -242,13 +242,14 @@
             this.btnUpdateTg.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnUpdateTg.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnUpdateTg.ForeColor = System.Drawing.Color.White;
-            this.btnUpdateTg.Location = new System.Drawing.Point(289, 298);
+            this.btnUpdateTg.Location = new System.Drawing.Point(307, 284);
             this.btnUpdateTg.Name = "btnUpdateTg";
-            this.btnUpdateTg.Size = new System.Drawing.Size(148, 49);
+            this.btnUpdateTg.Size = new System.Drawing.Size(130, 49);
             this.btnUpdateTg.TabIndex = 39;
             this.btnUpdateTg.Text = "Cập nhật";
             this.btnUpdateTg.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnUpdateTg.UseVisualStyleBackColor = false;
+            this.btnUpdateTg.Click += new System.EventHandler(this.btnUpdateTg_Click);
             // 
             // btnAddTg
             // 
@@ -258,13 +259,14 @@
             this.btnAddTg.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnAddTg.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAddTg.ForeColor = System.Drawing.Color.White;
-            this.btnAddTg.Location = new System.Drawing.Point(102, 298);
+            this.btnAddTg.Location = new System.Drawing.Point(135, 284);
             this.btnAddTg.Name = "btnAddTg";
-            this.btnAddTg.Size = new System.Drawing.Size(148, 49);
+            this.btnAddTg.Size = new System.Drawing.Size(130, 49);
             this.btnAddTg.TabIndex = 38;
             this.btnAddTg.Text = "Thêm";
             this.btnAddTg.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.btnAddTg.UseVisualStyleBackColor = false;
+            this.btnAddTg.Click += new System.EventHandler(this.btnAddTg_Click);
             // 
             // dtPThoiGianRa
             // 
